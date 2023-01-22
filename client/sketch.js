@@ -29,7 +29,6 @@ function setup() {
   clock = createP("");
   clock.position(width/2 - 78, 24);
   clock.style("font-size", "32px");
-  clock.style("font-family", myFont)
   clock.style("color", "white");
   setInterval(updateclock, 1000);
   let button = createButton("Pause");
