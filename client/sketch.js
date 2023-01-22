@@ -16,6 +16,7 @@ let stonks = new Map();
 let clock;
 let paused = false;
 let myFont;
+let percentageComplete;
 
 function preload() {
   myFont = loadFont("Roboto-Regular.ttf");
@@ -79,8 +80,11 @@ function draw() {
     // draw the progress bar
     currentTime = millis();
     let elapsedTime = currentTime - startTime;
-    let percentageComplete =
-      ((elapsedTime / (duration * 1000)) * width * 1) / 3;
+    if (elapsedTime > duration * 1000) {
+      percentageComplete = width * 1 / 3;
+    } else {
+      percentageComplete = elapsedTime / (duration * 1000) * width * 1 / 3;
+    }
     strokeWeight(3);
     stroke(217, 217, 217);
     fill(217, 217, 217);
