@@ -78,9 +78,9 @@ function draw() {
     // draw the progress bar
     currentTime = millis();
     let elapsedTime = currentTime - startTime;
-    let percentageComplete = (elapsedTime / (duration * 1000)) * width;
+    let percentageComplete = (elapsedTime / (duration * 1000)) * width/2;
     strokeWeight(0);
-    rect(0, 0, percentageComplete, 20);
+    rect(width/2, 0, percentageComplete, 20);
     
 
     // update the drawn data
