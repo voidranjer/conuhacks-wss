@@ -23,8 +23,9 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   startTime = millis();
   clock = createP("");
-  clock.position(0, 0);
+  clock.position(width/2 - 60, 24);
   clock.style("font-size", "32px");
+  clock.style("font-family", "")
   clock.style("color", "white");
   setInterval(updateclock, 1000);
   let button = createButton("Pause");
@@ -78,9 +79,15 @@ function draw() {
     // draw the progress bar
     currentTime = millis();
     let elapsedTime = currentTime - startTime;
-    let percentageComplete = (elapsedTime / (duration * 1000)) * width/2;
+    let percentageComplete = (elapsedTime / (duration * 1000)) * width*1/3;
+    strokeWeight(3);
+    stroke(217, 217, 217);
+    fill(217, 217, 217);
+    rect(width/3, 20, width*1/3, 20, 10);
     strokeWeight(0);
-    rect(width/2, 0, percentageComplete, 20);
+    fill(0,255,0);
+    rect(width/3, 20, percentageComplete, 20, 10);
+  
     
 
     // update the drawn data
