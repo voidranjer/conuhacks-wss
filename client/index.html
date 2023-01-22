@@ -7,13 +7,64 @@
     <title>Starry Stocks</title>
 
     <link rel="stylesheet" type="text/css" href="style.css" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans+Thai&display=swap" rel="stylesheet" />
 
     <script src="libraries/p5.min.js"></script>
     <script src="libraries/p5.sound.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+    body, html {
+      height: 100%;
+      margin: 0;
+    }
+    
+    .bg {
+      /* The image used */
+      background-image: url("landingpage.png");
+    
+      /* Full height */
+      height: 100%; 
+    
+      /* Center and scale the image nicely */
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+
+    /* two buttons side by side */
+    .view1 {
+      position: absolute;
+      text-align: center;
+      top: 60%;
+      left: 45%;
+      -webkit-appearance: button;
+      -moz-appearance: button;
+      appearance: button;
+      font-family: 'IBM Plex Sans Thai', sans-serif;
+      text-decoration: none;
+      color: white;
+
+    }
+
+    .view2 {
+      position: absolute;
+      text-align: center;
+      top: 60%;
+      left: 52%;
+      -webkit-appearance: button;
+      -moz-appearance: button;
+      appearance: button;
+      font-family: 'IBM Plex Sans Thai', sans-serif;
+      text-decoration: none;
+      color: white;
+    }
+    </style>
   </head>
 
   <body>
-    <a href="view1/">View 1</a>
-    <a href="view2/">View 2</a>
+    <div class="bg"></div>
+    <a href="view1/" class="view1">View 1</a>
+    <a href="view2/" class="view2">View 2</a>
   </body>
 </html>
