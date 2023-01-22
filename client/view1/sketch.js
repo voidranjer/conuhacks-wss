@@ -107,7 +107,7 @@ function draw() {
     // let percentageComplete = (elapsedTime / (duration * 1000)) * width;
     strokeWeight(0);
     fill(52, 62, 89);
-    rect(width/3, 20, percentageComplete + 20, 20, 20);
+    rect(width/3, 20, percentageComplete, 20, 20);
 
     // update the drawn data
     for (let i = 0; i < dots.length; i++) {
