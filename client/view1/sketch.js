@@ -224,8 +224,8 @@ function dotMaker() {
         "\n" + 
         volume + " shares",
     };
-    if (dot.strokeWeight > 15) {
-      dot.strokeWeight = 15 + volume / 10;
+    if (dot.strokeWeight > 8) {
+      dot.strokeWeight = 8 + volume / 7;
     }
     // check overlap
     for (let i = 0; i < dots.length; i++) {
