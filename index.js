@@ -12,7 +12,9 @@ async function begin(ws) {
     const elapsedTime = currentTime - startTime;
 
     while (elapsedTime >= data[index].RelativeMillis) {
-      ws.send(JSON.stringify(data[index]));
+      let message = data[index];
+      if (message.MessageType === "NewOrderAcknowledged")
+        ws.send(JSON.stringify(data[index]));
       index++;
     }
 
