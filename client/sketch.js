@@ -15,19 +15,23 @@ let prices = new Map();
 let stonks = new Map();
 let clock;
 let paused = false;
+let myFont;
 
-function preload() {}
+function preload() {
+  myFont = loadFont("Roboto-Regular.ttf");
+}
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  textFont(myFont);
   startTime = millis();
   clock = createP("");
-  clock.position(0, 0);
+  clock.position(width / 2 - 78, 24);
   clock.style("font-size", "32px");
   clock.style("color", "white");
   setInterval(updateclock, 1000);
   let button = createButton("Pause");
-  button.position(0, 72);
+  button.position(width / 2 - 20, 100);
   button.mousePressed(() => {
     paused = !paused;
   });
@@ -75,7 +79,12 @@ function draw() {
     // draw the progress bar
     currentTime = millis();
     let elapsedTime = currentTime - startTime;
-    let percentageComplete = (elapsedTime / (duration * 1000)) * width;
+    let percentageComplete =
+      ((elapsedTime / (duration * 1000)) * width * 1) / 3;
+    strokeWeight(3);
+    stroke(217, 217, 217);
+    fill(217, 217, 217);
+    rect(width / 3, 20, (width * 1) / 3, 20, 10);
     strokeWeight(0);
     rect(0, 0, percentageComplete, 20);
 
