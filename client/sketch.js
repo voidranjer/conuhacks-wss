@@ -40,7 +40,7 @@ function setup() {
   dataDisplay.style("font-size", "20px");
   dataDisplay.style("color", "white");
 
-  const ws = new WebSocket("ws://localhost:443");
+  const ws = new WebSocket("ws://localhost:8080");
 
   ws.addEventListener("open", () => ws.send("start"));
 

@@ -36,8 +36,8 @@ async function begin(ws) {
   }
 }
 
-const wss = new WebSocket.Server({ port: 443 });
-// NOTE: This is not yet a secure websocket server (despite the 443 port) - we need to add SSL/TLS to this server (to be able to use wss:// instead of just ws://)
+const wss = new WebSocket.Server({ port: 8080 });
+// NOTE: This is not yet a secure websocket server - we need to add SSL/TLS to this server (to be able to use wss:// instead of just ws://)
 
 wss.on("connection", (ws) => {
   console.log("A new client has connected");
