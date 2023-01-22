@@ -16,6 +16,7 @@ let stonks = new Map();
 let clock;
 
 
+
 function preload() {
 }
 
@@ -23,8 +24,9 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   startTime = millis();
   clock = createP("");
-  clock.position(0, 20);
+  clock.position(0, 0);
   clock.style("font-size", "32px");
+  clock.style("color", "white");
   setInterval(updateclock, 1000);
   const ws = new WebSocket('ws://localhost:443');
 
