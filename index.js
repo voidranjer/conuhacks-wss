@@ -15,8 +15,12 @@ async function begin(ws) {
     let dict = {};
     while (index < data.length && elapsedTime >= data[index].RelativeMillis) {
       let message = data[index];
-      if (message.MessageType === "NewOrderAcknowledged")
-        ws.send(JSON.stringify(message));
+
+      if (message.MessageType === "NewOrderAcknowledged") {
+        const data = { symbol: message.Symbol, price: message.OrderPrice };
+        ws.send(JSON.stringify({ type: "message", data }));
+      }
+
       index++;
 
       if (dict[message.Symbol] === undefined) {
@@ -25,7 +29,7 @@ async function begin(ws) {
     }
 
     //send dict
-    ws.send(JSON.stringify(dict));
+    ws.send(JSON.stringify({ type: "volume", data: dict }));
     dict = {};
 
     await new Promise((r) => setTimeout(r, 1000));
