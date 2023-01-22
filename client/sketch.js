@@ -14,8 +14,7 @@ let stonk;
 let prices = new Map();
 let stonks = new Map();
 let clock;
-
-
+let paused = false;
 
 function preload() {
 }
@@ -28,6 +27,16 @@ function setup() {
   clock.style("font-size", "32px");
   clock.style("color", "white");
   setInterval(updateclock, 1000);
+  let button = createButton("Pause");
+  button.position(0, 72);
+  button.mousePressed(() => {
+    paused = !paused});
+  let dataDisplay = createDiv("");
+  dataDisplay.style("position", "absolute");
+  dataDisplay.style("font-size", "20px");
+  dataDisplay.style("color", "white");
+  
+  
   const ws = new WebSocket('ws://localhost:443');
 
   ws.addEventListener("open", () => ws.send("start"));
@@ -51,13 +60,10 @@ function setup() {
     }
   }
     
-    
-
     // handle changes in data
   });
   
 }
-
 function updateclock(){
   clock.html(floor(Date.now()/1000));
 }
@@ -67,56 +73,46 @@ function windowResized() {
 }
 
 function draw() {
-  console.log(dots);
-  
-  background(31, 31, 31);
-  // draw the progress bar
-  currentTime = millis();
-  let elapsedTime = currentTime - startTime;
-  let percentageComplete = (elapsedTime / (duration * 1000)) * width;
-  strokeWeight(0);
-  rect(0, 0, percentageComplete, 20);
+  if (!(paused)){
+    background(31, 31, 31);
+    // draw the progress bar
+    currentTime = millis();
+    let elapsedTime = currentTime - startTime;
+    let percentageComplete = (elapsedTime / (duration * 1000)) * width;
+    strokeWeight(0);
+    rect(0, 0, percentageComplete, 20);
+    
 
-  // update the drawn data
-  for (let i = 0; i < dots.length; i++) {
-    let transparency = (dots[i].timer/40)*255;
-    stroke(217, 217, 217, transparency);
-    // dots[i].timer -= 1;
-    strokeWeight(dots[i].strokeWeight);
-    // console.log(dots[i].timer + " " + dots[i].strokeWeight);
-    point(dots[i].x, dots[i].y);
-    if (dots[i].timer <= 1) {
-      dots.splice(i, 1);
-    }
-    else{
-      dots[i].timer -= 1;
+    // update the drawn data
+    for (let i = 0; i < dots.length; i++) {
+      let transparency = (dots[i].timer/40)*255;
+      stroke(217, 217, 217, transparency);
+      strokeWeight(dots[i].strokeWeight);
+      point(dots[i].x, dots[i].y);
+      if (dots[i].timer <= 1) {
+        dots.splice(i, 1);
+      }
+      else{
+        dots[i].timer -= 1;
+      }
     }
   }
-  console.log(dots.length);
-  // background(255);
 }
-
 function dotMaker() {
   if (prices.size == 0 || stonks.size == 0) {
     return;
   }
   let strokeWeight = 0;
   for (stonk of stonks){
-    // console.log (prices.get(stonk[0]), prices.get(stonk[0]) / stonk[1]);
     let realprice = prices.get(stonk[0]) / stonk[1];
     let volume = stonk[1];
     var dot = {
       x: random(width),
       y: random(0,height-20),
-      // timer: data["OrderPrice"] / 20,
       timer: realprice * 10 * 6,
-      // strokeWeight: (data["OrderPrice"]) / 15
-      strokeWeight: volume * 5
+      strokeWeight: volume * 5,
+      data: "symbol: "+ stonk[0] + " at price: " + realprice + " at volume: " + volume
     }
-    // console.log(dot.strokeWeight);
-    // console.log(dot.timer);
-    // console.log(dot.x);
-    // console.log(dot.y);
     dots.push(dot);
   }
 prices.clear();
