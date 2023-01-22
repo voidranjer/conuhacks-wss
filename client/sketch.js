@@ -88,7 +88,8 @@ function draw() {
     rect(width / 3, 20, (width * 1) / 3, 20, 10);
     // let percentageComplete = (elapsedTime / (duration * 1000)) * width;
     strokeWeight(0);
-    rect(0, 0, percentageComplete, 20);
+    fill(0,255,0);
+    rect(width/3, 20, percentageComplete, 20, 10);
 
     // update the drawn data
     for (let i = 0; i < dots.length; i++) {
@@ -113,7 +114,7 @@ function draw() {
         fill(rgb.r, rgb.g, rgb.b);
         strokeWeight(0);
         textSize(25);
-        text(dots[i].symbol, x, y);
+        text(dots[i].data, x, y);
       }
       if (dots[i].timer <= 1) {
         dots.splice(i, 1);
@@ -139,10 +140,10 @@ function dotMaker() {
       symbol: stonk[0],
       data:
         "symbol: " +
-        stonk[0] +
-        " at price: " +
-        realprice +
-        " at volume: " +
+        stonk[0] + 
+        "\n price: " +
+        parseFloat(realprice).toFixed(2) +
+        "\n volume: " +
         volume,
     };
     dots.push(dot);
