@@ -110,7 +110,7 @@ function draw() {
         strokeWeight(5);
         circle(x, y, radius + 15);
         drawingContext.shadowBlur = 0;
-        fill(255, 0, 0);
+        fill(rgb.r, rgb.g, rgb.b);
         strokeWeight(0);
         textSize(25);
         text(dots[i].symbol, x, y);
