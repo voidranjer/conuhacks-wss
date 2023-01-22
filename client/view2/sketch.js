@@ -8,7 +8,7 @@ function setup() {
   drawingContext.shadowColor = "white";
   drawingContext.shadowWeight = 100;
 
-  const ws = new WebSocket("ws://localhost:8080");
+  const ws = new WebSocket("ws://conuhacks.ravenjs.net:8080");
   ws.addEventListener("open", () => ws.send("start"));
   ws.onmessage = ({ data: response }) => {
     const { type, data } = JSON.parse(response);

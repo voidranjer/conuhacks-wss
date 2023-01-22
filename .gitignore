@@ -1,6 +1,10 @@
 # macOS
 .DS_Store
 
+# Temp files
+scripts/input.json
+scripts/output.json
+
 # Logs
 logs
 *.log

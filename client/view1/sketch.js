@@ -31,7 +31,7 @@ function setup() {
   clock.position(width / 2 - 24, 28);
   clock.style("font-size", "18px");
   clock.style("color", "white");
-  clock.style("font-family", "Roboto-Regular")
+  clock.style("font-family", "Roboto-Regular");
   setInterval(updateclock, 1000);
   let button = createButton("Pause");
   button.position(width / 2 - 20, 70);
@@ -43,7 +43,7 @@ function setup() {
   dataDisplay.style("font-size", "20px");
   dataDisplay.style("color", "white");
 
-  const ws = new WebSocket("ws://localhost:8080");
+  const ws = new WebSocket("ws://conuhacks.ravenjs.net:8080");
 
   ws.addEventListener("open", () => ws.send("start"));
 
@@ -80,7 +80,9 @@ function updateclock() {
 }
 
 function checkTime(i) {
-  if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+  if (i < 10) {
+    i = "0" + i;
+  } // add zero in front of numbers < 10
   return i;
 }
 
@@ -95,9 +97,9 @@ function draw() {
     currentTime = millis();
     let elapsedTime = currentTime - startTime;
     if (elapsedTime > duration * 1000) {
-      percentageComplete = width * 1 / 3;
+      percentageComplete = (width * 1) / 3;
     } else {
-      percentageComplete = elapsedTime / (duration * 1000) * width * 1 / 3;
+      percentageComplete = ((elapsedTime / (duration * 1000)) * width * 1) / 3;
     }
     strokeWeight(3);
     stroke(217, 217, 217);
@@ -107,12 +109,13 @@ function draw() {
     // let percentageComplete = (elapsedTime / (duration * 1000)) * width;
     strokeWeight(0);
     fill(52, 62, 89);
-    rect(width/3, 20, percentageComplete, 20, 20);
+    rect(width / 3, 20, percentageComplete, 20, 20);
 
     // update the drawn data
     for (let i = 0; i < dots.length; i++) {
       strokeWeight(0);
-      let transparency = ((dots[i].timer / 40) * 255) * (dots[i].strokeWeight / 15);
+      let transparency =
+        (dots[i].timer / 40) * 255 * (dots[i].strokeWeight / 15);
       const rgb = stringToRGB(dots[i].symbol);
       // text("symb", dots[i].x, dots[i].y);
       let x = dots[i].x;
@@ -154,9 +157,9 @@ function draw() {
       } else {
         for (let j = 0; j < largest.length; j++) {
           if (!largest.includes(dots[i]) && dots[i].strokeWeight > 15) {
-            if(dots[i].strokeWeight > largest[j].strokeWeight) {
-            largest.splice(j, 1);
-            largest.push(dots[i]);
+            if (dots[i].strokeWeight > largest[j].strokeWeight) {
+              largest.splice(j, 1);
+              largest.push(dots[i]);
             }
           }
         }
@@ -212,17 +215,18 @@ function dotMaker() {
     let realprice = prices.get(stonk[0]) / stonk[1];
     let volume = stonk[1];
     var dot = {
-      x: random(0 + width/10, width - width/10),
-      y: random(0 + height/7, height - height/10),
+      x: random(0 + width / 10, width - width / 10),
+      y: random(0 + height / 7, height - height / 10),
       timer: realprice * 10,
       strokeWeight: volume / 4,
       symbol: stonk[0],
       data:
-        stonk[0] + 
+        stonk[0] +
         "\n$" +
         parseFloat(realprice).toFixed(2) +
-        "\n" + 
-        volume + " shares",
+        "\n" +
+        volume +
+        " shares",
     };
     if (dot.strokeWeight > 8) {
       dot.strokeWeight = 8 + volume / 7;
@@ -233,8 +237,8 @@ function dotMaker() {
       let y = dots[i].y;
       let d = dist(dot.x, dot.y, x, y);
       while (d < dot.strokeWeight + dots[i].strokeWeight) {
-        dot.x = random(0 + width/10, width - width/10);
-        dot.y = random(0 + height/ 10, height - height/10);
+        dot.x = random(0 + width / 10, width - width / 10);
+        dot.y = random(0 + height / 10, height - height / 10);
         i = -1;
       }
     }
