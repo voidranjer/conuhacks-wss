@@ -20,7 +20,11 @@ async function begin(ws) {
       let message = data[index];
 
       if (message.MessageType === "NewOrderAcknowledged") {
-        const data = { symbol: message.Symbol, price: message.OrderPrice };
+        const data = {
+          symbol: message.Symbol,
+          price: message.OrderPrice,
+          timestamp: message.TimeStamp,
+        };
         uniqueSymbols.add(data.symbol);
         ws.send(JSON.stringify({ type: "message", data }));
       }

@@ -1,5 +1,6 @@
 const dots = {};
 let currentAnomalyTresh = 1000000;
+let currTimestamp = Date.now();
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -13,11 +14,12 @@ function setup() {
     const { type, data } = JSON.parse(response);
 
     if (type === "message") {
-      const { symbol, price } = data;
+      const { symbol, price, timestamp } = data;
       if (!dots[symbol]) {
         dots[symbol] = new Dot(symbol);
       }
       dots[symbol].price = price;
+      currTimestamp = timestamp;
     }
 
     if (type === "volume") {
@@ -56,13 +58,15 @@ function draw() {
       fill(0, 0, 255);
       ellipse(dot.x, dot.y, dot.currentVolume + 10);
       fill(255, 0, 0);
-      text(dot.symbol, dot.x, dot.y);
+      text(`Symbol: ${dot.symbol}`, dot.x, dot.y);
+      text(`Volume: ${dot.targetVolume}`, dot.x, dot.y + 20);
+      text(`Price: ${dot.price}`, dot.x, dot.y + 30);
     }
 
     // Important data points
     if (dot.currentVolume > 30) {
       fill(255, 0, 0);
-      text(dot.symbol, dot.x, dot.y);
+      text(`Symbol: ${dot.symbol}`, dot.x, dot.y);
     }
   }
 }
