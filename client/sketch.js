@@ -84,7 +84,9 @@ function draw() {
     strokeWeight(3);
     stroke(217, 217, 217);
     fill(217, 217, 217);
+    drawingContext.shadowBlur = 0;
     rect(width / 3, 20, (width * 1) / 3, 20, 10);
+    // let percentageComplete = (elapsedTime / (duration * 1000)) * width;
     strokeWeight(0);
     rect(0, 0, percentageComplete, 20);
 
@@ -93,12 +95,26 @@ function draw() {
       let transparency = (dots[i].timer / 40) * 255;
       const rgb = stringToRGB(dots[i].symbol);
       // text("symb", dots[i].x, dots[i].y);
-      drawingContext.shadowBlur = 100;
-      drawingContext.shadowColor = color(rgb.r, rgb.g, rgb.b);
-      drawingContext.shadowWeight = 500;
-      stroke(rgb.r + 150, rgb.g + 150, rgb.b + 150, transparency);
-      strokeWeight(dots[i].strokeWeight);
-      point(dots[i].x, dots[i].y);
+      let x = dots[i].x;
+      let y = dots[i].y;
+      const radius = dots[i].strokeWeight;
+      let d = dist(mouseX, mouseY, x, y);
+      const FACTOR = 150;
+      fill(rgb.r + FACTOR, rgb.g + FACTOR, rgb.b + FACTOR, transparency);
+      ellipse(x, y, radius, radius);
+      if (d < radius) {
+        drawingContext.shadowBlur = 100;
+        drawingContext.shadowColor = "white";
+        drawingContext.shadowWeight = 500;
+        stroke(255, 0, 0);
+        strokeWeight(5);
+        circle(x, y, radius + 15);
+        drawingContext.shadowBlur = 0;
+        fill(255, 0, 0);
+        strokeWeight(0);
+        textSize(25);
+        text(dots[i].symbol, x, y);
+      }
       if (dots[i].timer <= 1) {
         dots.splice(i, 1);
       } else {
