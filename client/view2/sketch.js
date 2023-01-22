@@ -1,4 +1,5 @@
 const dots = {};
+let currentAnomalyTresh = 1000000;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -28,6 +29,10 @@ function setup() {
         dots[symbol].targetVolume = volume;
       }
     }
+
+    if (type === "anomaly") {
+      currentAnomalyTresh = data;
+    }
   };
 }
 
@@ -39,6 +44,13 @@ function draw() {
     noStroke();
     dot.draw();
 
+    // Anomalies
+    if (dot.targetVolume > currentAnomalyTresh) {
+      fill(0, 255, 0);
+      ellipse(dot.x, dot.y, dot.currentVolume + 10);
+    }
+
+    // Mouse hover
     const distance = dist(dot.x, dot.y, mouseX, mouseY);
     if (distance < dot.currentVolume) {
       fill(0, 0, 255);
@@ -47,6 +59,7 @@ function draw() {
       text(dot.symbol, dot.x, dot.y);
     }
 
+    // Important data points
     if (dot.currentVolume > 30) {
       fill(255, 0, 0);
       text(dot.symbol, dot.x, dot.y);
