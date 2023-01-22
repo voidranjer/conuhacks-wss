@@ -11,10 +11,10 @@ async function begin(ws) {
     const currentTime = Date.now();
     const elapsedTime = currentTime - startTime;
 
-    while (elapsedTime >= data[index].RelativeMillis) {
+    while (index < data.length && elapsedTime >= data[index].RelativeMillis) {
       let message = data[index];
       if (message.MessageType === "NewOrderAcknowledged")
-        ws.send(JSON.stringify(data[index]));
+        ws.send(JSON.stringify(message));
       index++;
     }
 
@@ -22,7 +22,7 @@ async function begin(ws) {
   }
 }
 
-const wss = new WebSocket.Server({ port: 8080 });
+const wss = new WebSocket.Server({ port: 443 });
 
 wss.on("connection", (ws) => {
   console.log("A new client has connected");
