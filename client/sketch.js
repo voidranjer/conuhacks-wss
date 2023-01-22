@@ -6,15 +6,18 @@ let alphaData;
 var dots = [];
 
 function preload() {
-  TSXData = loadJSON("data/TSXData.json");
-  aequitasData = loadJSON("data/AequitasData.json");
-  alphaData = loadJSON("data/AlphaData.json");
-
 }
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  
+  const ws = new WebSocket('ws://localhost:443');
+
+  ws.addEventListener("open", () => ws.send("start"));
+
+  ws.addEventListener("message", ({ data }) => {
+    console.log(data);
+    // handle changes in data
+  });
   
 }
 
@@ -23,30 +26,6 @@ function windowResized() {
 }
 
 function draw() {
-
-  // add new data every second
-  if (frameCount % 360 == 0) {
-    let curData = fakeStream(TSXData, 0, 0);
-
-    for (let i = 0; i < curData.length; i++) {
-      dots.push(dotMaker(curData[i]));
-    }
-    // console.log(dots.length);
-
-    // check overlap of dots
-    // for (let i = 0; i < dots.length; i++) {
-    //   for (let j = 0; j < dots.length; j++) {
-    //     if (i != j) {
-    //       let safety = 0;
-    //       while (dist(dots[i].x, dots[i].y, dots[j].x, dots[j].y) < 10 && safety < 100) {
-    //         dots[i].x = random(width);
-    //         dots[i].y = random(height);
-    //         safety++;
-    //       }
-    //     }
-    //   }
-    // }
-  }
   
   background(31, 31, 31);
   // update the drawn data
