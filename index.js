@@ -25,6 +25,8 @@ async function begin(ws) {
 const wss = new WebSocket.Server({ port: 8080 });
 
 wss.on("connection", (ws) => {
+  console.log("A new client has connected");
+
   ws.on("message", (data) => {
     if (data.toString() === "start") {
       begin(ws);
