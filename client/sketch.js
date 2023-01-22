@@ -16,8 +16,7 @@ let stonks = new Map();
 let clock;
 let paused = false;
 
-function preload() {
-}
+function preload() {}
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -30,42 +29,40 @@ function setup() {
   let button = createButton("Pause");
   button.position(0, 72);
   button.mousePressed(() => {
-    paused = !paused});
+    paused = !paused;
+  });
   let dataDisplay = createDiv("");
   dataDisplay.style("position", "absolute");
   dataDisplay.style("font-size", "20px");
   dataDisplay.style("color", "white");
-  
-  
-  const ws = new WebSocket('ws://localhost:443');
+
+  const ws = new WebSocket("ws://localhost:443");
 
   ws.addEventListener("open", () => ws.send("start"));
 
   ws.addEventListener("message", ({ data }) => {
-    fill(0,255,0);
-    if (JSON.parse(data).type == "message"){
+    fill(0, 255, 0);
+    if (JSON.parse(data).type == "message") {
       stonk = JSON.parse(data).data["symbol"];
       price = JSON.parse(data).data["price"];
-      if(!(prices.has(stonk))){
+      if (!prices.has(stonk)) {
         prices.set(stonk, price);
       }
-      prices.set(stonk, prices.get(stonk) + price); 
-    }
-    else if (JSON.parse(data).type == "volume"){
-      if (JSON.parse(data).data != {}){
-        for (stonk of Object.keys(JSON.parse(data).data)){
+      prices.set(stonk, prices.get(stonk) + price);
+    } else if (JSON.parse(data).type == "volume") {
+      if (JSON.parse(data).data != {}) {
+        for (stonk of Object.keys(JSON.parse(data).data)) {
           stonks.set(stonk, JSON.parse(data).data[stonk]);
         }
         dotMaker();
+      }
     }
-  }
-    
+
     // handle changes in data
   });
-  
 }
-function updateclock(){
-  clock.html(floor(Date.now()/1000));
+function updateclock() {
+  clock.html(floor(Date.now() / 1000));
 }
 
 function windowResized() {
@@ -73,7 +70,7 @@ function windowResized() {
 }
 
 function draw() {
-  if (!(paused)){
+  if (!paused) {
     background(31, 31, 31);
     // draw the progress bar
     currentTime = millis();
@@ -81,18 +78,21 @@ function draw() {
     let percentageComplete = (elapsedTime / (duration * 1000)) * width;
     strokeWeight(0);
     rect(0, 0, percentageComplete, 20);
-    
 
     // update the drawn data
     for (let i = 0; i < dots.length; i++) {
-      let transparency = (dots[i].timer/40)*255;
-      stroke(217, 217, 217, transparency);
+      let transparency = (dots[i].timer / 40) * 255;
+      const rgb = stringToRGB(dots[i].symbol);
+      // text("symb", dots[i].x, dots[i].y);
+      drawingContext.shadowBlur = 100;
+      drawingContext.shadowColor = color(rgb.r, rgb.g, rgb.b);
+      drawingContext.shadowWeight = 500;
+      stroke(rgb.r + 150, rgb.g + 150, rgb.b + 150, transparency);
       strokeWeight(dots[i].strokeWeight);
       point(dots[i].x, dots[i].y);
       if (dots[i].timer <= 1) {
         dots.splice(i, 1);
-      }
-      else{
+      } else {
         dots[i].timer -= 1;
       }
     }
@@ -103,18 +103,25 @@ function dotMaker() {
     return;
   }
   let strokeWeight = 0;
-  for (stonk of stonks){
+  for (stonk of stonks) {
     let realprice = prices.get(stonk[0]) / stonk[1];
     let volume = stonk[1];
     var dot = {
       x: random(width),
-      y: random(0,height-20),
-      timer: realprice * 10 * 6,
+      y: random(0, height - 20),
+      timer: realprice * 10 * 2,
       strokeWeight: volume * 5,
-      data: "symbol: "+ stonk[0] + " at price: " + realprice + " at volume: " + volume
-    }
+      symbol: stonk[0],
+      data:
+        "symbol: " +
+        stonk[0] +
+        " at price: " +
+        realprice +
+        " at volume: " +
+        volume,
+    };
     dots.push(dot);
   }
-prices.clear();
-stonks.clear();
+  prices.clear();
+  stonks.clear();
 }
