@@ -41,6 +41,12 @@ function setup() {
 function draw() {
   background(0);
 
+  // Server clock
+  textSize(30);
+  fill(0, 255, 0);
+  text(currTimestamp, 30, 30);
+  textSize(10);
+
   for (const dot of Object.values(dots)) {
     dot.update();
     noStroke();
@@ -66,7 +72,7 @@ function draw() {
     // Important data points
     if (dot.currentVolume > 30) {
       fill(255, 0, 0);
-      text(`Symbol: ${dot.symbol}`, dot.x, dot.y);
+      text(dot.symbol, dot.x, dot.y);
     }
   }
 }
