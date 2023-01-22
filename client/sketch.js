@@ -15,21 +15,25 @@ let prices = new Map();
 let stonks = new Map();
 let clock;
 let paused = false;
+let myFont;
+
 
 function preload() {
+  myFont = loadFont('Roboto-Regular.ttf');
 }
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  textFont(myFont);
   startTime = millis();
   clock = createP("");
-  clock.position(width/2 - 60, 24);
+  clock.position(width/2 - 78, 24);
   clock.style("font-size", "32px");
-  clock.style("font-family", "")
+  clock.style("font-family", myFont)
   clock.style("color", "white");
   setInterval(updateclock, 1000);
   let button = createButton("Pause");
-  button.position(0, 72);
+  button.position(width/2-20, 100);
   button.mousePressed(() => {
     paused = !paused});
   let dataDisplay = createDiv("");
