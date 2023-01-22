@@ -112,7 +112,7 @@ function draw() {
     // update the drawn data
     for (let i = 0; i < dots.length; i++) {
       strokeWeight(0);
-      let transparency = (dots[i].timer / 40) * 255;
+      let transparency = ((dots[i].timer / 40) * 255) * (dots[i].strokeWeight / 15);
       const rgb = stringToRGB(dots[i].symbol);
       // text("symb", dots[i].x, dots[i].y);
       let x = dots[i].x;
@@ -215,7 +215,7 @@ function dotMaker() {
       x: random(0 + width/10, width - width/10),
       y: random(0 + height/7, height - height/10),
       timer: realprice * 10,
-      strokeWeight: volume / 2,
+      strokeWeight: volume / 4,
       symbol: stonk[0],
       data:
         stonk[0] + 
